@@ -1,6 +1,5 @@
 package com.example.echopen;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -11,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.echopen.Model.BlogItemModel;
+import com.example.echopen.SingleTon.FirebaseDatabaseSingleton;
 import com.example.echopen.adapter.BlogAdapter;
 import com.example.echopen.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,7 +26,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private DatabaseReference databaseReference;
+    private final DatabaseReference blogReference = FirebaseDatabaseSingleton.getInstance().getDatabaseReference();
+    private final DatabaseReference userReference = FirebaseDatabaseSingleton.getInstance().getUserReference();
     private final List<BlogItemModel> blogItems = new ArrayList<>();
     private FirebaseAuth auth;
 
@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         binding.cardView2.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
 
         auth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance("https://echopen-1e18e-default-rtdb.firebaseio.com/")
-                .getReference("blogs");
         String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
 
         if (userId != null) {
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // fetch data from Firebase database
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        blogReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 blogItems.clear();
@@ -80,10 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadUserProfileImage(String userId) {
-        DatabaseReference userReference = FirebaseDatabase.getInstance("https://echopen-1e18e-default-rtdb.firebaseio.com/")
-                .getReference("users").child(userId);
-
-        userReference.child("profileImage").addValueEventListener(new ValueEventListener() {
+        userReference.child(userId).child("profileImage").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String profileImageUrl = snapshot.getValue(String.class);
@@ -99,3 +94,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+

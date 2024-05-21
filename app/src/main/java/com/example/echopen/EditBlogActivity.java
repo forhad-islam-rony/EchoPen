@@ -6,14 +6,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.echopen.Model.BlogItemModel;
+import com.example.echopen.SingleTon.FirebaseDatabaseSingleton;
 import com.example.echopen.databinding.ActivityEditBlogBinding;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 
 public class EditBlogActivity extends AppCompatActivity {
 
     private ActivityEditBlogBinding binding;
+    private final DatabaseReference blogReference = FirebaseDatabaseSingleton.getInstance().getDatabaseReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +47,13 @@ public class EditBlogActivity extends AppCompatActivity {
     }
 
     private void updateDataInFirebase(BlogItemModel blogItemModel) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://echopen-1e18e-default-rtdb.firebaseio.com/").getReference("blogs");
         String postId = blogItemModel.getPostId();
 
-        databaseReference.child(postId).setValue(blogItemModel)
+        blogReference.child(postId).setValue(blogItemModel)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(EditBlogActivity.this, "Blog Updated successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .addOnFailureListener(e -> Toast.makeText(EditBlogActivity.this, "Blog Updated Unsuccessfully", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> Toast.makeText(EditBlogActivity.this, "Blog Update Unsuccessful", Toast.LENGTH_SHORT).show());
     }
 }

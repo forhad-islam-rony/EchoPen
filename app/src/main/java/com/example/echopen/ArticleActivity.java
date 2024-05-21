@@ -1,7 +1,5 @@
 package com.example.echopen;
 
-
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.echopen.Model.BlogItemModel;
+import com.example.echopen.SingleTon.FirebaseDatabaseSingleton;
 import com.example.echopen.adapter.ArticleAdapter;
 import com.example.echopen.databinding.ActivityArticleBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,10 +25,11 @@ import java.util.List;
 public class ArticleActivity extends AppCompatActivity {
 
     private ActivityArticleBinding binding;
-    private DatabaseReference databaseReference;
     private FirebaseAuth auth;
     private ArticleAdapter blogAdapter;
     private static final int EDIT_BLOG_REQUEST_CODE = 123;
+
+    private final DatabaseReference blogReference = FirebaseDatabaseSingleton.getInstance().getDatabaseReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +69,7 @@ public class ArticleActivity extends AppCompatActivity {
 
             recyclerView.setAdapter(blogAdapter);
 
-            databaseReference = FirebaseDatabase.getInstance("https://echopen-1e18e-default-rtdb.firebaseio.com/")
-                    .getReference("blogs");
-
-            databaseReference.addValueEventListener(new ValueEventListener() {
+            blogReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     List<BlogItemModel> blogSavedList = new ArrayList<>();
@@ -96,7 +92,7 @@ public class ArticleActivity extends AppCompatActivity {
 
     private void deleteBlogPost(BlogItemModel blogItem) {
         String postId = blogItem.getPostId();
-        DatabaseReference blogPostReference = databaseReference.child(postId);
+        DatabaseReference blogPostReference = blogReference.child(postId);
 
         blogPostReference.removeValue()
                 .addOnSuccessListener(aVoid -> Toast.makeText(ArticleActivity.this, "Blog post deleted successfully", Toast.LENGTH_SHORT).show())

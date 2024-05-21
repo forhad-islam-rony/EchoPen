@@ -3,22 +3,23 @@ package com.example.echopen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.echopen.SingleTon.FirebaseDatabaseSingleton;
 import com.example.echopen.databinding.ActivityProfileBinding;
 import com.example.echopen.register.WelcomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
-    private DatabaseReference databaseReference;
+    private final DatabaseReference userReference = FirebaseDatabaseSingleton.getInstance().getUserReference();
     private FirebaseAuth auth;
 
     @Override
@@ -37,9 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         auth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance("https://echopen-1e18e-default-rtdb.firebaseio.com/")
-                .getReference("users");
-
         String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
 
         if (userId != null) {
@@ -48,9 +46,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserProfileData(String userId) {
-        DatabaseReference userReference = databaseReference.child(userId);
+        DatabaseReference userDatabaseReference = userReference.child(userId);
 
-        userReference.child("profileImage").addValueEventListener(new ValueEventListener() {
+        userDatabaseReference.child("profileImage").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String profileImageUrl = snapshot.getValue(String.class);
@@ -67,7 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        userReference.child("name").addValueEventListener(new ValueEventListener() {
+        userDatabaseReference.child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String userName = snapshot.getValue(String.class);

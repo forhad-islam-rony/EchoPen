@@ -1,5 +1,3 @@
-
-
 package com.example.echopen;
 
 import android.os.Bundle;
@@ -7,7 +5,9 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.echopen.Model.BlogItemModel;
+import com.example.echopen.SingleTon.FirebaseDatabaseSingleton;
 import com.example.echopen.adapter.BlogAdapter;
 import com.example.echopen.databinding.ActivitySavedArticlesBinding;
 import com.google.android.gms.tasks.Tasks;
@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -32,6 +31,8 @@ public class SavedArticlesActivity extends AppCompatActivity {
     private BlogAdapter blogAdapter;
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final DatabaseReference blogReference = FirebaseDatabaseSingleton.getInstance().getDatabaseReference();
+    private final DatabaseReference userReference = FirebaseDatabaseSingleton.getInstance().getUserReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,9 @@ public class SavedArticlesActivity extends AppCompatActivity {
 
         String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
         if (userId != null) {
-            DatabaseReference userReference = FirebaseDatabase.getInstance("https://echopen-1e18e-default-rtdb.firebaseio.com/")
-                    .getReference("users").child(userId).child("saveBlogPosts");
+            DatabaseReference userSavedPostsReference = userReference.child(userId).child("saveBlogPosts");
 
-            userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            userSavedPostsReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -85,8 +85,6 @@ public class SavedArticlesActivity extends AppCompatActivity {
     }
 
     private BlogItemModel fetchBlogItem(String postId) {
-        DatabaseReference blogReference = FirebaseDatabase.getInstance("https://echopen-1e18e-default-rtdb.firebaseio.com/")
-                .getReference("blogs");
         try {
             DataSnapshot dataSnapshot = Tasks.await(blogReference.child(postId).get());
             return dataSnapshot.getValue(BlogItemModel.class);
@@ -95,4 +93,3 @@ public class SavedArticlesActivity extends AppCompatActivity {
         }
     }
 }
-
