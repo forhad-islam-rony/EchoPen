@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "515592339534",
+    "project_id": "echopen-1e18e",
+    "storage_bucket": "echopen-1e18e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515592339534:android:f4b78155526be48878831f",
+        "android_client_info": {
+          "package_name": "com.example.echopen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHFr4QqXTZdV1xFsBmbkdzn6YouzMMGm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
