@@ -4,19 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/datecolor"
+    android:background="@color/light_white"
     android:elevation="5dp"
     app:cardCornerRadius="9dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:padding="10dp"
+        android:background="@color/white"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/heading"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="9dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="13dp"
             android:maxLines="2"
             android:text="Please Start Writing Better Git Commits"
@@ -87,10 +89,11 @@
             android:id="@+id/post"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_marginTop="14dp"
+            android:layout_margin="10dp"
             android:letterSpacing="0.03"
             android:lineHeight="22sp"
             android:maxLines="4"
+            android:textColor="@color/black"
             android:text="jhadkfjd kahdflkjdf halfjaldk fhajfd fllajfdkl dkfjladk fkjalkdfjlkd dlfkjalkfj kljdkfjlkdjf kjdflkdjs lajdflkdj kjjdflkajd kjdfk lakdjf "
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -116,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:text="20"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/readMoreButton"
             app:layout_constraintStart_toEndOf="@+id/readMoreButton"
             app:layout_constraintTop_toTopOf="@+id/readMoreButton" />
