@@ -18,6 +18,7 @@ import com.example.echopen.databinding.BlogItemBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
+
 import java.util.List;
 
 public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder> {
@@ -67,11 +68,10 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
             binding.post.setText(blogItemModel.getPost());
             binding.likeCount.setText(String.valueOf(blogItemModel.getLikeCount()));
 
-            // Set onClickListener for the item
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            // Set onClickListener for the "Read more" button
+            binding.readMoreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = binding.getRoot().getContext();
                     Intent intent = new Intent(context, ReadMoreActivity.class);
                     intent.putExtra("blogItem", blogItemModel);
                     context.startActivity(intent);
@@ -96,6 +96,16 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
                     }
                 });
             }
+
+            binding.readMoreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ReadMoreActivity.class);
+                    intent.putExtra("postId", blogItemModel.getPostId());
+                    context.startActivity(intent);
+                }
+            });
+
 
             binding.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -251,5 +261,3 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
         notifyDataSetChanged();
     }
 }
-
-
