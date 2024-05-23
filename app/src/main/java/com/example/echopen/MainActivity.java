@@ -2,6 +2,8 @@ package com.example.echopen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private final DatabaseReference blogReference = FirebaseDatabaseSingleton.getInstance().getDatabaseReference();
     private final DatabaseReference userReference = FirebaseDatabaseSingleton.getInstance().getUserReference();
     private final List<BlogItemModel> blogItems = new ArrayList<>();
+    private final List<BlogItemModel> filteredBlogItems = new ArrayList<>();
+    private BlogAdapter blogAdapter;
     private FirebaseAuth auth;
 
     @Override
@@ -49,9 +53,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = binding.blogRecyclerView;
-        BlogAdapter blogAdapter = new BlogAdapter(blogItems);
+        blogAdapter = new BlogAdapter(filteredBlogItems);
         recyclerView.setAdapter(blogAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        binding.searchBlog.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterBlogItems(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterBlogItems(newText);
+                return false;
+            }
+        });
 
         // fetch data from Firebase database
         blogReference.addValueEventListener(new ValueEventListener() {
@@ -65,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 Collections.reverse(blogItems);
-                blogAdapter.notifyDataSetChanged();
+                filterBlogItems(binding.searchBlog.getQuery().toString());
             }
 
             @Override
@@ -75,6 +93,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.floatingAddArticleButton.setOnClickListener(v -> startActivity(new Intent(this, AddArticleActivity.class)));
+    }
+
+    private void filterBlogItems(String query) {
+        filteredBlogItems.clear();
+        if (TextUtils.isEmpty(query)) {
+            filteredBlogItems.addAll(blogItems);
+        } else {
+            for (BlogItemModel blogItem : blogItems) {
+                if (blogItem.getUserName().toLowerCase().contains(query.toLowerCase()) ||
+                        blogItem.getHeading().toLowerCase().contains(query.toLowerCase())) {
+                    filteredBlogItems.add(blogItem);
+                }
+            }
+        }
+        blogAdapter.notifyDataSetChanged();
     }
 
     private void loadUserProfileImage(String userId) {
