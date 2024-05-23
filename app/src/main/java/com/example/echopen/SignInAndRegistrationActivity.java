@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 public class SignInAndRegistrationActivity extends AppCompatActivity {
 
     private ActivitySignInAndRegistrationBinding binding;
-    private FirebaseAuth auth;
+    public FirebaseAuth auth;
     private FirebaseStorage storage;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
@@ -141,4 +141,9 @@ public class SignInAndRegistrationActivity extends AppCompatActivity {
                     .into(binding.registerUserImage);
         }
     }
+
+    public void showToast(String message, int duration) {
+        Toast.makeText(this, message, duration).show();
+    }
+
 }
