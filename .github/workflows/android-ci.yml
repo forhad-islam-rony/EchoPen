@@ -22,17 +22,18 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Set up Android SDK
+      - name: Install Android SDK
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget tar unzip
-          wget https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip
-          unzip commandlinetools-linux-6609375_latest.zip -d $HOME
-          mkdir -p $HOME/cmdline-tools
-          mv $HOME/cmdline-tools/bin $HOME/cmdline-tools/tools
-          echo "sdk.dir=$HOME/cmdline-tools" > local.properties
-          echo "ANDROID_HOME=$HOME/cmdline-tools" >> $GITHUB_ENV
-          echo "PATH=$PATH:$HOME/cmdline-tools/tools/bin" >> $GITHUB_ENV
+          sudo apt-get install -y wget unzip
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O commandlinetools.zip
+          mkdir -p $ANDROID_HOME/cmdline-tools
+          unzip commandlinetools.zip -d $ANDROID_HOME/cmdline-tools
+          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-29" "build-tools;29.0.3"
+        env:
+          ANDROID_HOME: $HOME/android-sdk
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
