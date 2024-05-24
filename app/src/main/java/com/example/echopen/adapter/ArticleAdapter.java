@@ -51,8 +51,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.BlogView
     public int getItemCount() {
         return blogList.size();
     }
+      public List<BlogItemModel> getBlogList() {
+        return blogList;
+    }
 
     public void setData(List<BlogItemModel> blogSavedList) {
+//        blogList.clear();
+//        blogList.addAll(newBlogList);
+//        notifyDataSetChanged();
         this.blogList = blogSavedList;
         notifyDataSetChanged();
     }
@@ -95,3 +101,102 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.BlogView
 }
 
 
+//package com.example.echopen.adapter;
+//
+//import android.content.Context;
+//import android.view.LayoutInflater;
+//import android.view.View;
+//import android.view.ViewGroup;
+//import android.widget.Button;
+//import android.widget.ImageButton;
+//import android.widget.ImageView;
+//import android.widget.TextView;
+//
+//import androidx.annotation.NonNull;
+//import androidx.recyclerview.widget.RecyclerView;
+//
+//import com.bumptech.glide.Glide;
+//import com.example.echopen.Model.BlogItemModel;
+//import com.example.echopen.R;
+//
+//import java.util.List;
+//
+//public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
+//
+//    private final Context context;
+//    private final List<BlogItemModel> blogList;
+//    private final OnItemClickListener listener;
+//
+//    public interface OnItemClickListener {
+//        void onEditClick(BlogItemModel blogItem);
+//        void onReadMoreClick(BlogItemModel blogItem);
+//        void onDeleteClick(BlogItemModel blogItem);
+//    }
+//
+//    public ArticleAdapter(Context context, List<BlogItemModel> blogList, OnItemClickListener listener) {
+//        this.context = context;
+//        this.blogList = blogList;
+//        this.listener = listener;
+//    }
+//
+//    @NonNull
+//    @Override
+//    public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        View view = LayoutInflater.from(context).inflate(R.layout.article_item, parent, false);
+//        return new ArticleViewHolder(view);
+//    }
+//
+//    @Override
+//    public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
+//        BlogItemModel blogItem = blogList.get(position);
+//        holder.bind(blogItem, listener);
+//    }
+//
+//    @Override
+//    public int getItemCount() {
+//        return blogList.size();
+//    }
+//
+//    public List<BlogItemModel> getBlogList() {
+//        return blogList;
+//    }
+//
+//    public void setData(List<BlogItemModel> newBlogList) {
+//        blogList.clear();
+//        blogList.addAll(newBlogList);
+//        notifyDataSetChanged();
+//    }
+//
+//    static class ArticleViewHolder extends RecyclerView.ViewHolder {
+//        private final TextView titleTextView;
+//        private final TextView descriptionTextView;
+//        private final TextView dateTextView;
+//        private final ImageView profileImageView;
+//        private final Button editButton;
+//        private final Button deleteButton;
+//
+//        public ArticleViewHolder(@NonNull View itemView) {
+//            super(itemView);
+//            titleTextView = itemView.findViewById(R.id.blogTitle);
+//            descriptionTextView = itemView.findViewById(R.id.blogDescription);
+//            dateTextView = itemView.findViewById(R.id.date);
+//            profileImageView = itemView.findViewById(R.id.profile);
+//            editButton = itemView.findViewById(R.id.editButton);
+//            deleteButton = itemView.findViewById(R.id.DeleteButton);
+//        }
+//
+//        public void bind(BlogItemModel blogItem, OnItemClickListener listener) {
+//            titleTextView.setText(blogItem.getHeading());
+//            descriptionTextView.setText(blogItem.getPost());
+//            dateTextView.setText(blogItem.getDate());
+//
+//            Glide.with(profileImageView.getContext())
+//                    .load(blogItem.getProfileImage())
+//                    .into(profileImageView);
+//
+//            editButton.setOnClickListener(v -> listener.onEditClick(blogItem));
+//            itemView.setOnClickListener(v -> listener.onReadMoreClick(blogItem));
+//            deleteButton.setOnClickListener(v -> listener.onDeleteClick(blogItem));
+//        }
+//    }
+//}

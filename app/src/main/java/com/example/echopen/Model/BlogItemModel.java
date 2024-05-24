@@ -17,6 +17,7 @@ public class BlogItemModel implements Parcelable {
     private String postId;
     private List<String> likedBy;
 
+
     public BlogItemModel() {
         this.heading = "null";
         this.userName = "null";
@@ -38,6 +39,7 @@ public class BlogItemModel implements Parcelable {
         this.post = post;
         this.likeCount = likeCount;
         this.profileImage = profileImage;
+
     }
 
     protected BlogItemModel(Parcel in) {
@@ -63,6 +65,9 @@ public class BlogItemModel implements Parcelable {
             return new BlogItemModel[size];
         }
     };
+
+
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -163,5 +168,7 @@ public class BlogItemModel implements Parcelable {
     public void setLikedBy(List<String> likedBy) {
         this.likedBy = likedBy;
     }
+
+
 }
 
