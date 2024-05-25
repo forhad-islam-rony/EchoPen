@@ -30,4 +30,21 @@ public class UserProfileHelperTest {
 
         assertNull(actualImageUrl);
     }
+    @Test
+    public void testUserName() {
+        String expect="anything";
+        userProfileHelper.set_name(expect);
+
+        //No image set here
+        assertEquals(userProfileHelper.getUsername(),expect);
+    }
+
+    public void testEmail() {
+        String expect="anything@gmail.com";
+        userProfileHelper.set_email("anything@gmail.com");
+
+
+        //No image set here
+        assertEquals(userProfileHelper.getUsername(),expect);
+    }
 }

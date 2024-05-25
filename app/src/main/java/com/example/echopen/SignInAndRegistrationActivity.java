@@ -82,7 +82,11 @@ public class SignInAndRegistrationActivity extends AppCompatActivity {
             binding.RegisterButton.setOnClickListener(v -> {
                 Log.d("register", "register button is clicked");
                 String registerName = binding.registerName.getText().toString();
+                //testing name
+                userProfileHelper.set_name(registerName);
                 String registerEmail = binding.registerEmail.getText().toString();
+                //testin email
+                userProfileHelper.set_email(registerEmail);
                 String registerPassword = binding.registerPassword.getText().toString();
 
                 if (registerName.isEmpty() || registerEmail.isEmpty() || registerPassword.isEmpty()) {
