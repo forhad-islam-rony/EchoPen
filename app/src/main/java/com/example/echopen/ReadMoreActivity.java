@@ -322,7 +322,7 @@ public class ReadMoreActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
-                                binding.likeButton.setImageResource(R.drawable.btn_star);
+                                binding.likeButton.setImageResource(R.drawable.red_love);
                             }
                         }
 
@@ -336,9 +336,9 @@ public class ReadMoreActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        saveButton.setImageResource(R.drawable.save); // Adjust the icon as necessary
+                        saveButton.setImageResource(R.drawable.red_save); // Adjust the icon as necessary
                     } else {
-                        saveButton.setImageResource(R.drawable.ic_menu_save);
+                        saveButton.setImageResource(R.drawable.final_save);
                     }
                 }
 
@@ -371,7 +371,7 @@ public class ReadMoreActivity extends AppCompatActivity {
                                                     likeCount--;
                                                     blogReference.child("likeCount").setValue(likeCount);
                                                     Toast.makeText(ReadMoreActivity.this, "Post like cancelled", Toast.LENGTH_SHORT).show();
-                                                    binding.likeButton.setImageResource(R.drawable.love); // Change the icon to unliked
+                                                    binding.likeButton.setImageResource(R.drawable.final_love); // Change the icon to unliked
                                                 }
                                             }
                                         }
@@ -394,7 +394,7 @@ public class ReadMoreActivity extends AppCompatActivity {
                                                 likeCount++;
                                                 blogReference.child("likeCount").setValue(likeCount);
                                                 Toast.makeText(ReadMoreActivity.this, "Post liked", Toast.LENGTH_SHORT).show();
-                                                binding.likeButton.setImageResource(R.drawable.btn_star); // Change the icon to liked
+                                                binding.likeButton.setImageResource(R.drawable.red_love); // Change the icon to liked
                                             }
                                         }
 
@@ -425,15 +425,15 @@ public class ReadMoreActivity extends AppCompatActivity {
                     if (snapshot.exists()) {
                         userSavedPostsReference.child(postId).removeValue()
                                 .addOnSuccessListener(aVoid -> {
-                                    saveButton.setImageResource(R.drawable.ic_menu_save);
-                                    Toast.makeText(ReadMoreActivity.this, "Post unsaved", Toast.LENGTH_SHORT).show();
+                                    saveButton.setImageResource(R.drawable.red_save);
+                                    Toast.makeText(ReadMoreActivity.this, "Post saved", Toast.LENGTH_SHORT).show();
                                 })
                                 .addOnFailureListener(e -> Toast.makeText(ReadMoreActivity.this, "Failed to unsave the post", Toast.LENGTH_SHORT).show());
                     } else {
                         userSavedPostsReference.child(postId).setValue(true)
                                 .addOnSuccessListener(aVoid -> {
-                                    saveButton.setImageResource(R.drawable.save); // Adjust the icon as necessary
-                                    Toast.makeText(ReadMoreActivity.this, "Post saved", Toast.LENGTH_SHORT).show();
+                                    saveButton.setImageResource(R.drawable.final_save); // Adjust the icon as necessary
+                                    Toast.makeText(ReadMoreActivity.this, "Post Unsaved", Toast.LENGTH_SHORT).show();
                                 })
                                 .addOnFailureListener(e -> Toast.makeText(ReadMoreActivity.this, "Failed to save the post", Toast.LENGTH_SHORT).show());
                     }

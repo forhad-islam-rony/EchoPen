@@ -85,9 +85,9 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            binding.likeButton.setImageResource(R.drawable.btn_star);
+                            binding.likeButton.setImageResource(R.drawable.red_love);
                         } else {
-                            binding.likeButton.setImageResource(R.drawable.heart);
+                            binding.likeButton.setImageResource(R.drawable.final_love);
                         }
                     }
 
@@ -126,9 +126,9 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            binding.postSaveButton.setImageResource(R.drawable.save);
+                            binding.postSaveButton.setImageResource(R.drawable.red_save);
                         } else {
-                            binding.postSaveButton.setImageResource(R.drawable.ic_menu_save);
+                            binding.postSaveButton.setImageResource(R.drawable.final_save);
                         }
                     }
 
@@ -225,7 +225,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
                         Context context = binding.getRoot().getContext();
                         Toast.makeText(context, "Failed to unSave The Blog", Toast.LENGTH_SHORT).show();
                     });
-                    binding.postSaveButton.setImageResource(R.drawable.save);
+                    binding.postSaveButton.setImageResource(R.drawable.final_save);
                 } else {
                     userReference.child("saveBlogPosts").child(postId).setValue(true).addOnSuccessListener(aVoid -> {
                         BlogItemModel clickedBlogItem = null;
@@ -245,7 +245,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.BlogViewHolder
                         Context context = binding.getRoot().getContext();
                         Toast.makeText(context, "Failed to save Blog", Toast.LENGTH_SHORT).show();
                     });
-                    binding.postSaveButton.setImageResource(R.drawable.save);
+                    binding.postSaveButton.setImageResource(R.drawable.final_save);
                 }
             }
 
