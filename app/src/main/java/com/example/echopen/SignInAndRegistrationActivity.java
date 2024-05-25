@@ -98,6 +98,7 @@ public class SignInAndRegistrationActivity extends AppCompatActivity {
                                 userReference.child(userId).setValue(userData);
                                 // Upload image to Firebase storage
                                 StorageReference storageReference = storage.getReference().child("profile_image/" + userId + ".jpg");
+
                                 if (imageUri != null) {
                                     storageReference.putFile(imageUri).addOnCompleteListener(uploadTask -> {
                                         if (uploadTask.isSuccessful()) {
