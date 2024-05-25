@@ -126,7 +126,7 @@
         app:shapeAppearanceOverlay="@style/round"
         app:layout_constraintBottom_toTopOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="@+id/saveButton"
-        app:srcCompat="@drawable/heart" />
+        app:srcCompat="@drawable/final_love" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveButton"
@@ -141,6 +141,6 @@
         android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/save" />
+        app:srcCompat="@drawable/final_save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

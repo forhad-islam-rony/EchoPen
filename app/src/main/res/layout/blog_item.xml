@@ -136,7 +136,8 @@
             app:layout_constraintStart_toEndOf="@+id/likeCount"
             app:layout_constraintTop_toTopOf="@+id/likeCount"
             app:layout_constraintVertical_bias="0.468"
-            app:srcCompat="@android:drawable/btn_star"
+            android:src="@drawable/final_love"
+
             tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
@@ -151,7 +152,7 @@
             app:layout_constraintStart_toEndOf="@+id/likeButton"
             app:layout_constraintTop_toTopOf="@+id/likeButton"
             app:layout_constraintVertical_bias="0.518"
-            app:srcCompat="@android:drawable/ic_menu_save"
+            app:srcCompat="@drawable/final_save"
             tools:ignore="TouchTargetSizeCheck" />
 
         <androidx.constraintlayout.widget.Barrier

@@ -63,4 +63,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
 
     androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("com.google.firebase:firebase-database:19.7.0")
+    androidTestImplementation ("com.google.firebase:firebase-auth:21.0.1")
+
+    
+
 }
