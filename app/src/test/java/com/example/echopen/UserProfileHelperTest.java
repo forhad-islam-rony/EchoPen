@@ -15,7 +15,7 @@ public class UserProfileHelperTest {
 
     @Test
     public void testSetAndGetProfileImageUrl() {
-        String expectedImageUrl = "http://example.com/image.jpg";
+        String expectedImageUrl = "app/src/main/res/drawable/heart.png";
 
         userProfileHelper.setProfileImageUrl(expectedImageUrl);
         String actualImageUrl = userProfileHelper.getProfileImageUrl();

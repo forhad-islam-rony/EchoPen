@@ -23,6 +23,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class SignInAndRegistrationActivity extends AppCompatActivity {
 
+    UserProfileHelper userProfileHelper=new UserProfileHelper();
     private ActivitySignInAndRegistrationBinding binding;
     public FirebaseAuth auth;
     private FirebaseStorage storage;
@@ -105,6 +106,9 @@ public class SignInAndRegistrationActivity extends AppCompatActivity {
                                             storageReference.getDownloadUrl().addOnCompleteListener(uriTask -> {
                                                 if (uriTask.isSuccessful()) {
                                                     String imageUrl = uriTask.getResult().toString();
+
+                                                    //for testing purpose
+                                                    userProfileHelper.setProfileImageUrl(imageUrl);
                                                     // Save the image URL to the Realtime Database
                                                     userReference.child(userId).child("profileImage").setValue(imageUrl);
                                                 }
