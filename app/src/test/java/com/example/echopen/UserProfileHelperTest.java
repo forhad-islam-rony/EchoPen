@@ -15,7 +15,7 @@ public class UserProfileHelperTest {
 
     @Test
     public void testSetAndGetProfileImageUrl() {
-        String expectedImageUrl = "http://example.com/image.jpg";
+        String expectedImageUrl = "app/src/main/res/drawable/heart.png";
 
         userProfileHelper.setProfileImageUrl(expectedImageUrl);
         String actualImageUrl = userProfileHelper.getProfileImageUrl();
@@ -29,5 +29,22 @@ public class UserProfileHelperTest {
         //No image set here
 
         assertNull(actualImageUrl);
+    }
+    @Test
+    public void testUserName() {
+        String expect="anything";
+        userProfileHelper.set_name(expect);
+
+        //No image set here
+        assertEquals(userProfileHelper.getUsername(),expect);
+    }
+
+    public void testEmail() {
+        String expect="anything@gmail.com";
+        userProfileHelper.set_email("anything@gmail.com");
+
+
+        //No image set here
+        assertEquals(userProfileHelper.getUsername(),expect);
     }
 }
